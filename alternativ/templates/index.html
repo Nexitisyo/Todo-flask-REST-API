@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework - sipgate GmbH - Viktor Kuznecov</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="d-flex p-2">
+    <form name="entry" action="/todo" method="post">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description">
+
+        <label for="due_date">Due-To:</label>
+        <input type="text" id="due_date" name="due_date">
+
+        <label for="priority">Priority</label>
+        <!--<input type="text" id="priority" name="priority"> -->
+        <select name="priority" id="priority">
+            <option value="low">low</option>
+            <option value="middle">middle</option>
+            <option value="high">high</option>
+        </select>
+        <button type="submit" value="Submit">Add Entry</button>
+    </form>
+</div>
+    <span class="{{status_class}}">{{status}}</span>
+
+    <h1>Homework: ToDo</h1>
+    <div class="d-flex p-2">
+        <table class="table">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Description</th>
+            <th scope="col">Due To</th>
+            <th scope="col">Done</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {% for entry in entries %}
+        <tr>
+            <td>{{entry.id}}</td>
+            <td>{{entry.description}}</td>
+            <td>{{entry.due_date}}</td>
+            <td>{{entry.done}}</td>
+            <td>{{entry.priority}}</td>
+            <td>
+                <div class="btn-group" role="group" >
+                    <button type="button" onclick="location.href='/todo/{{entry.id}}'" class="btn btn-primary">View</button>
+
+                    <form name="done" action="/todo" method="patch">
+                        <button type="submit" class="btn btn-success" value="True">Done</button>
+                    </form>
+                    <button data-action="delete" type="button"  class="btn btn-danger" value="{{entry.id}}">Delete</button>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </table></div>
+
+
+</body>
+
+
+</html>
